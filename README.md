@@ -1,7 +1,7 @@
 # EZobject2xml
 Save and load easily any python object data into/from a xml file.
 
-This module has only one object _xmltool_ with 2 functions:
+This module has only one object _xmltool_ with 2 functions.
 
 #### For saving an object into a xml file, you just have to code (python):
 ```python
