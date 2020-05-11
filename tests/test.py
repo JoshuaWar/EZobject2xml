@@ -1,4 +1,4 @@
-from EZobject2xml import *
+from EZobject2xml.xmltoolMod import *
 
 class theSubObject():
     def __init__(self,theInt):
