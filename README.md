@@ -5,6 +5,8 @@ This module has only one object _xmltool_ with 2 functions.
 
 #### For saving an object into a xml file, you just have to code (python):
 ```python
+from EZobject2xml.xmltoolMod import *
+
 myXmltool = xmltool()
 
 myXmltool.saveObject2xml(myObject,myFilename)
@@ -52,6 +54,6 @@ where:
 
 As seen, myInitDataList is optional and only needed when your object has a list of an undefined number of other objects.
 
-The test file has a concrete example.
+The [test file](https://github.com/JoshuaWar/EZobject2xml/tree/master/tests "test file") has a concrete example.
 
 Please see the python help() function to see more technical information about these functions.
