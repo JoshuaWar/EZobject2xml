@@ -57,3 +57,8 @@ As seen, myInitDataList is optional and only needed when your object has a list 
 The [test file](https://github.com/JoshuaWar/EZobject2xml/tree/master/tests "test file") has a concrete example.
 
 Please see the python help() function to see more technical information about these functions.
+
+To install the package :
+```python
+pip install EZobject2xml-JoshuaWar
+```
