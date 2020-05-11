@@ -60,5 +60,5 @@ Please see the python help() function to see more technical information about th
 
 To install the package :
 ```python
-pip install EZobject2xml-JoshuaWar
+pip install EZobject2xml
 ```
