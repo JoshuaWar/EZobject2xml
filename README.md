@@ -23,6 +23,9 @@ where:
 myXmltool.loadObjectFromXml(myObject,myFilename)
 ```
 
+#### Not wanna save a data of your object ?:
+Just add "__" at the end of the name of the data and "saveObject2xml" function won't save this data.
+
 #### Exception:
 If objects have to be dynamically initialized during the data reading process
 (i.e. if your object has a list of an undefined number of other objects), 
