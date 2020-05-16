@@ -22,7 +22,7 @@ myXmltool.loadObjectFromXml(myObject,myFilename)
 Just add "__" at the end of the name of the data and "saveObject2xml" function won't save this data.
 
 #### Wanna save a single value data such as integer, float, string, set, tuple, list or dict ?:
-You just have to code:
+You just have to use SingleType class object:
 ```python
 from EZobject2xml.xmltoolMod import *
 myxmltool = xmltool()
