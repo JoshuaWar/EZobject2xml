@@ -38,7 +38,7 @@ myxmltool.loadObjectFromXml(myObject,myFilename)
 __version__ = '1.0.2' #last change in 05152020
 
 class SingleType():
-    """ This object is only used to transtype a single value data as integer, float, string, set, tuple, list or dict into an object.
+    """ This object is only used to transtype a single value data as integer, float, string, set, tuple, list or dict to an object.
 
     This is needed to use saveObject2xml function with a single value data.
     For saving any value as int, float, str, set, tuple, list or dict, you just have to code:
