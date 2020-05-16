@@ -11,6 +11,7 @@ myXmltool.saveObject2xml(myObject,myFilename)
 ```
 where:
 >_myObject_ is the object to save
+
 >_myFileName_ if the xml file
 
 #### And for loading:
@@ -45,21 +46,15 @@ In order to do that, we give a list of object class that we could use to create 
 
 This list of class objects is a initDataList object and we pass it as:
 ```python
-
 myInitDataList = initDataList()
-
 myInitDataList.addInitData(mySubObject1Class,(a tuple containing the parameters to initialize this SubObject))
-
 myInitDataList.addInitData(mySubObject2Class,(a tuple containing the parameters to initialize this SubObject))
-
 ...
 
 myXmltool = xmltool()
-
 myXmltool.loadObjectFromXml(myObject,myFilename,myInitDataList)
 ```
 where:
-
 >_mySubObject1Class_ is the class of an object which can be contained in myObject
 
 >_myObject_ is the object to save
