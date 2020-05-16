@@ -35,10 +35,33 @@ myxmltool.loadObjectFromXml(myObject,myFilename)
 ##todo
 ##nothing for now
 
-__version__ = '1.0.0' #last change in 05092020
+__version__ = '1.0.2' #last change in 05152020
+
+class SingleType():
+    """ This object is only used to transtype a single value data as integer, float, string, set, tuple, list or dict into an object.
+
+    This is needed to use saveObject2xml function with a single value data.
+    For saving any value as int, float, str, set, tuple, list or dict, you just have to code:
+    $ myxmltool = xmltool()
+    $ myvalue_object = SingleType(myvalue)
+    $ myxmltool.saveObject2xml(myvalue_object,'myvalue.xml')
+
+    For loading:
+    $ myxmltool.loadObjectFromXml(myvalue_object,'myvalue.xml')
+    $ myvalue = myvalue_object.value
+    """
+    
+    def __init__(self,value = None):
+        """
+        Parameters
+        ----------
+        value: any basic data type as int, float, str, set, tuple, list or dict
+        """
+        
+        self.value = value
 
 class initDataList():
-    """ This class object contains a list of all information to create new instances of different objects with the given parameters.
+    """ This object contains a list of all information to create new instances of different objects with the given parameters.
 
     This is neeeded when we want to load an object containing itself an undefined number of object (in a list or set).
     We use these data to create a first instance of these objects and then load the xml data into this object
@@ -86,7 +109,7 @@ class xmltool():
         self.__xmltool = None
         self.__file2beClosed = False
         self.__initDataList = list()
-        self.__FOLLOWREADEDLINES = False #for debugging only
+        self.__FOLLOWREADEDLINES = False #for debugging only, print all lines during processing
         
 #---------------------------------------------------------------
 #common functions
@@ -103,12 +126,16 @@ class xmltool():
                     if self.__FOLLOWREADEDLINES:
                         print(textline)
                     if  textline != '<?xml':
-                        print("codeError_oX1: The file " + self.__filename + " is not a xml File")
-                        print("The file should begin with a '<?xml' statement")
+                        print("EZobject2xml_1_0_2.xmltoolMod.xmltool.__openxmltool:")
+                        print("The file " + self.__filename + " is not a xml File.")
+                        print("The file should begin with a '<?xml' statement.")
+                        print("(error_code: 0.0.1.132)")
                         return False
                 return True
             except:
-                print("codeError_oX2: The file " + self.__filename + " cannot be accessed")
+                print("EZobject2xml_1_0_2.xmltoolMod.xmltool.__openxmltool:")
+                print("The file " + self.__filename + " cannot be accessed.")
+                print("(error_code: 0.0.1.138)")
                 return False
         return True
 
@@ -184,7 +211,7 @@ class xmltool():
                 self.__writeVariable(subValue)
         if type(value) == dict:
             for keys in value:
-                self.__xmltool.write("<value name='keys'>"+str(keys)+"</value>\n")
+                self.__xmltool.write("<value name='keys'>'"+str(keys)+"'</value>\n")
                 self.__writeVariable(value[keys])
         self.__xmltool.write('</multiValue>\n')
 
@@ -238,7 +265,7 @@ class xmltool():
             return True
         textline = self.__xmltool.readline()
         if self.__getNode(textline) != 'object':
-            self.__readVariable(textline)
+            print("EZobject2xml_1_0_2.xmltoolMod.xmltool.loadObjectFromXml : xml file and object to read do not match (error_code: 0.0.1.244)")
         else:
             self.__readObject(self.__theObject,textline)
         self.__closexmltool()
@@ -280,7 +307,9 @@ class xmltool():
             else:
                 return int(textline[startPos:startPos + textline[startPos:-1].find('<')])#integer
         except:
-            print("errorCode_rSV01: the textline " + textline + " doesn't refer to a readable value")
+            print("EZobject2xml_1_0_2.xmltoolMod.xmltool.__readSingleValue:")
+            print("The textline " + textline + " doesn't refer to a readable value.")
+            print("(error_code: 0.0.1.312)")
             return None
 
     def __readMultiValue(self,textline):
@@ -299,11 +328,11 @@ class xmltool():
                 theList.append(self.__readVariable(textline))
             if theType == 'dict':
                 key = self.__readVariable(textline)
-                textline2 = self.__xmltool.readline()
+                value_textline = self.__xmltool.readline()
                 if self.__FOLLOWREADEDLINES:
-                    print(textline2)
-                value = self.__readVariable(textline2)
-                theDict.update({key:value})
+                    print(value_textline)
+                value = self.__readVariable(value_textline)
+                theDict[key] = value
         if theType == 'tuple':
             return tuple(theList)
         if theType == 'list':
@@ -316,13 +345,17 @@ class xmltool():
     def __createObject(self,textline):
         classString = self.__getProperty('class',textline)
         if self.__initDataList == None:
-            print("codeError_cO1: you must pass a initDataList to initiate the class " + theClass)
+            print("EZobject2xml_1_0_2.xmltoolMod.xmltool.__createObject:")
+            print("You must pass a initDataList to initiate the class " + theClass)
+            print("(error_code: 0.0.1.350)")
             return None
         newObject = None
         initData = self.__initDataList.getInitData(classString)
         if initData != None and initData[1] is tuple:
             if len(initData[1]) > 9:
-                print("codeError_cO2: the numbers of parameters to initiate the class " + theClass + " is exceeding 9")
+                print("EZobject2xml_1_0_2.xmltoolMod.xmltool.__createObject :")
+                print("The numbers of parameters to initiate the class " + theClass + " is exceeding 9.")
+                print("(error_code: 0.0.1.358)")
             if len(initData[1]) == 9: #maximum 9 parameters
                 newObject = initData[0](initData[1][0],initData[1][1],initData[1][2],initData[1][3],initData[1][4],initData[1][5],initData[1][6],initData[1][7],initData[1][8])
             if len(initData[1]) == 8:
@@ -346,7 +379,9 @@ class xmltool():
         else:
             newObject = initData[0]()
         if newObject == None:
-            print("codeError_cO3: unable to initiate the class " + theClass)
+            print("EZobject2xml_1_0_2.xmltoolMod.xmltool.__createObject:")
+            print("Unable to initiate the class " + theClass)
+            print("(error_code: 0.0.1.384)")
         return newObject
 
     def __readObject(self,object2read,textline=None):
@@ -381,7 +416,3 @@ class xmltool():
             else:
                 object2read = self.__createObject(textline)
             return self.__readObject(object2read,textline)
-
-        
-                    
-    
