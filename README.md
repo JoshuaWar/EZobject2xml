@@ -6,16 +6,11 @@ This module has only one object _xmltool_ with 2 functions.
 #### For saving an object into a xml file, you just have to code (python):
 ```python
 from EZobject2xml.xmltoolMod import *
-
 myXmltool = xmltool()
-
 myXmltool.saveObject2xml(myObject,myFilename)
 ```
-
 where:
-
 >_myObject_ is the object to save
-
 >_myFileName_ if the xml file
 
 #### And for loading:
@@ -25,6 +20,22 @@ myXmltool.loadObjectFromXml(myObject,myFilename)
 
 #### Not wanna save a data of your object ?:
 Just add "__" at the end of the name of the data and "saveObject2xml" function won't save this data.
+
+#### Wanna save a single value data such as integer, float, string, set, tuple, list or dict ?:
+You just have to code:
+```python
+from EZobject2xml.xmltoolMod import *
+myxmltool = xmltool()
+myvalue_object = SingleType(myvalue)
+myxmltool.saveObject2xml(myvalue_object,'myvalue.xml')
+```
+For loading:
+```python
+myxmltool.loadObjectFromXml(myvalue_object,'myvalue.xml')
+myvalue = myvalue_object.value
+```
+where:
+>_myvalue_ is any basic data type as int, float, str, set, tuple, list or dict
 
 #### Exception:
 If objects have to be dynamically initialized during the data reading process
@@ -63,5 +74,5 @@ Please see the python help() function to see more technical information about th
 
 To install the package :
 ```python
-pip install EZobject2xml
+-m pip install EZobject2xml
 ```
